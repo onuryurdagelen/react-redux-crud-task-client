@@ -1,25 +1,51 @@
 import logo from './logo.svg';
 import './App.css';
+import AddProductForm from './components/AddProductForm';
+// import ProductList from './components/product/ProductList';
+import { useEffect } from 'react';
+import { connect } from 'react-redux/es/exports';
+import ProductList from './components/product/ProductList';
+import { getAllProducts } from './redux/actions';
+function App(props) {
+//   const products = useSelector(store => store.product.products);
 
-function App() {
+//   const dispatch = useDispatch();
+
+
+  useEffect(()=>{
+    props.getAllProducts();
+    
+},[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container my-4'>
+      <div className="row">
+        <div className="col-md-4">
+          <AddProductForm/>
+        </div>
+        <div className="col-md-8">
+          <ProductList products={props.products}/>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    products: state.productReducer
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllProducts: () => {
+      dispatch(getAllProducts());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
