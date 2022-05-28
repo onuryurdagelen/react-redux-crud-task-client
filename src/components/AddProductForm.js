@@ -8,24 +8,30 @@ const AddProductForm = (props) => {
   // console.log(props.products);
 
   const [formValues,setFormValues] = useState({
-    id: 0,
-    description: "kursun kalem desc",
-    createDate: "2022-05-24",
-    name: "kursun kalem",
-    price: 65,
-    categoryId: 1
+    description: "SILGI 5 DESC",
+    name: "SILGI 5",
+    price: 46,
+    categoryId: 6,
+    
   });
 
   const handleChange = (event) => {
 
     setFormValues(prevState => ({
       ...prevState,
-      createDate: new Date().toISOString(),
       [event.target.name]: event.target.value
     }));
 
   
     // console.log(formValues);
+  }
+  const resetValues = () => {
+    setFormValues({
+      description: "",
+      name: "",
+      price: 0,
+      categoryId: 0,
+    })
   }
   const submitValues = (e) =>{
     e.preventDefault();
@@ -38,7 +44,8 @@ const AddProductForm = (props) => {
     console.log(formValues);
     console.log("girdi!");
 
-    // dispatch(addProduct("Products",formValues))
+    props.onAddProduct(formValues);
+    resetValues();
   }
   return (
     <>
@@ -106,7 +113,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddTodo: product => {
+    onAddProduct: product => {
       dispatch(addProduct(product));
     }
   };

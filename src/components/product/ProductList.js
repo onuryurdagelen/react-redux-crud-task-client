@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react';
 import ProductItem from './ProductItem';
 
 const ProductList = ({products}) => {
@@ -8,7 +9,7 @@ const ProductList = ({products}) => {
     //     return <h3>Loading...</h3>
     // }
 
-
+    
 
   return (
       <>
@@ -20,13 +21,14 @@ const ProductList = ({products}) => {
         <th scope="col">Name</th>
         <th scope="col">Price</th>
         <th scope="col">Description</th>
-        <th scope="col">Category Id</th>
+        <th scope="col">Category Name</th>
         <th scope="col">Created Date</th>
         <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
       {products.map((product,index) => {
+        // console.log(product);
           return <ProductItem index={index} key={product.id} product={product}/>
       })}
     </tbody>

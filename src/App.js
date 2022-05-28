@@ -3,36 +3,42 @@ import './App.css';
 import AddProductForm from './components/AddProductForm';
 // import ProductList from './components/product/ProductList';
 import { useEffect } from 'react';
-import { connect } from 'react-redux/es/exports';
+import { connect, useDispatch, useSelector } from 'react-redux/es/exports';
 import ProductList from './components/product/ProductList';
 import { getAllProducts } from './redux/actions';
+import EditModal from './modal/EditModal';
+
 function App(props) {
-//   const products = useSelector(store => store.product.products);
 
-//   const dispatch = useDispatch();
-
-
+  
   useEffect(()=>{
     props.getAllProducts();
+    console.log("APP RE-RENDERED!!!");
     
-},[])
+},[props.products.length,props.product])
+
+
   return (
     <div className='container my-4'>
-      <div className="row">
+     <div className="row">
         <div className="col-md-4">
           <AddProductForm/>
         </div>
         <div className="col-md-8">
-          <ProductList products={props.products}/>
+          <ProductList product={props.product} products={props.products}/>
         </div>
+        <EditModal/>
       </div>
+
+      
     </div>
   );
 }
 
-function mapStateToProps(state) {
+const mapStateToProps =(state) =>{
   return {
-    products: state.productReducer
+    products: state.products,
+    product:state.product
   };
 }
 
